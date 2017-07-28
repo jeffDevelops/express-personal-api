@@ -17,7 +17,7 @@ app.use(methodOverride('_method'));
  ************/
 
 
-var db = require('./models');
+var db = require('./models/index.js');
 
 /**********
  * ROUTES *
