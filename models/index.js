@@ -4,4 +4,4 @@ mongoose.connect( process.env.MONGODB_URI ||
                   process.env.MONGOHQ_URL || 
                   "mongodb://localhost/personal-api");
 
-module.exports.VST = require("./VST.js");
+module.exports.VST = require("./vst.js");
