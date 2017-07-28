@@ -2,13 +2,15 @@
 var express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
-    profileData = require('./seed.js');
+    profileData = require('./seed.js'),
+    methodOverride = require('method-override');
 
 // parse incoming urlencoded form data
 // and populate the req.body object
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(methodOverride('_method'));
 
 /************
  * DATABASE *
@@ -34,7 +36,7 @@ app.get('/', function homepage(req, res) {
 });
 
 //PROFILE SHOW ROUTE
-app.get('/profile', function(req, res) {
+app.get('/api/profile', function(req, res) {
   res.json(profileData);
 });
 
@@ -60,7 +62,52 @@ app.get('/api/vsts/:vstName', function(req, res) {
   });
 });
 
-//VSTS 
+//VSTS CREATE ROUTE
+app.post('/api/vsts', function(req, res) {
+  var newVST = new db.VST({
+    title: req.body.title,
+    developer: req.body.dev,
+    function: req.body.function
+  });
+  console.log(req.body.title);
+  console.log(newVST);
+  newVST.save(function(err, doc) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log('saved ', doc.title);
+    res.json(doc);
+  });
+});
+
+//VSTS UPDATE ROUTE
+app.put('/api/vsts', function(req, res) {
+  var vstToEdit = req.body.title.charAt(0).toUpperCase() + req.body.title.slice(1);
+  db.VST.find({title: vstToEdit}, function(err, docs) {
+    if (!docs || docs.length === 0) {
+      return;
+    }
+    docs.dev = req.body.devy;
+    docs.function = req.body.functiony;
+    console.log(doc);
+    db.VST.update(doc);
+    console.log(doc.body);
+    res.json(doc);
+  });
+});
+
+//VSTS DELETE ROUTE
+app.delete('/api/vsts/:id', function(req, res) {
+  console.log("Byebye" + req.params.id);
+  var vstToDelete = req.params.id;
+  db.VST.findOneAndRemove({ _id: req.params.id }, function(err, doc) {
+    if(err) {
+      console.log(err);
+      return err;
+    }
+    res.json(doc);
+  });
+});
 
 
 /*

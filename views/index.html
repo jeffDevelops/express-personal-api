@@ -25,6 +25,32 @@
           <h4><a href="/api">Read My API Documentation</a></h4>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h3>CRUD My Virtual Studio Tech API!</h3>
+          <h4>Submit a New VST</h4>
+          <form action="/api/vsts" method="POST">
+            <label for="title">Title: </label>
+            <input id="title" type="text" placeholder="Steven Slate Drums" name="title">
+            <label for="dev">Developer: </label>
+            <input id="dev" type="text" placeholder="Steven Slate" name="dev">
+            <label for="function">VST Function: </label>
+            <input id="function" type="text" placeholder="Physical (Drum) Modeling" name="function">
+            <input type="submit">
+          </form>
+          <h4>Or, update a VST already in the database!</h4>
+          <form action="/api/vsts?_method=PUT" method="POST">
+            <label for="titley">Title: </label>
+            <input id="titley" type="text" placeholder="Steven Slate Drums" name="title">
+            <label for="devy">Developer: </label>
+            <input id="devy" type="text" placeholder="Steven Slate" name="dev">
+            <label for="functiony">VST Function: </label>
+            <input id="functiony" type="text" placeholder="Physical (Drum) Modeling" name="function">
+            <input type="hidden" name="_METHOD" value="PUT"/>
+            <input type="submit">
+          </form>
+        </div>
+      </div>
     </div>
   </body>
 </html>
